@@ -1,11 +1,7 @@
 import {readFileSync} from 'fs'
 
-
-
-const corpusFilename = './universe.txt'
-
-, corpus = readFileSync(
-  corpusFilename, {encoding: 'ascii'})
+const getCorpus = (file) => readFileSync(
+  file, {encoding: 'ascii'})
       .split('\n')
 
 , getCharFrequencies = (words) => {
@@ -40,8 +36,15 @@ const corpusFilename = './universe.txt'
   return scores
 }
 
-, suggestion = Array.from(Object.entries(getScores(corpus)))
+, getSuggestions = (corpus) =>
+      Array.from(Object.entries(getScores(corpus)))
       .sort((a, b) => (b[1] - a[1]))
-      .slice(-50,-1)
+      .slice(0,50)
 
-console.log(suggestion)
+
+export default {
+  getCorpus,
+  getCharFrequencies,
+  getScores,
+  getSuggestions
+}
